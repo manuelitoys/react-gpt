@@ -1,7 +1,11 @@
 # compiled output
-/dist
-/node_modules
-/build
+/nest-gpt/dist
+/nest-gpt/node_modules
+/nest-gpt/build
+
+/react-gpt/dist
+/react-gpt/node_modules
+/react-gpt/build
 
 .env
 # Logs

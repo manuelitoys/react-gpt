@@ -7,7 +7,7 @@
 /react-gpt/node_modules
 /react-gpt/build
 
-.env
+/nest-gpt/.env
 # Logs
 logs
 *.log

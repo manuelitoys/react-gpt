@@ -2,10 +2,12 @@
 /nest-gpt/dist
 /nest-gpt/node_modules
 /nest-gpt/build
+/nest-gpt/.env
 
 /react-gpt/dist
 /react-gpt/node_modules
 /react-gpt/build
+/react-gpt/.env
 
 /nest-gpt/.env
 # Logs

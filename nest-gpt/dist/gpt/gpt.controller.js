@@ -23,6 +23,34 @@ let GptController = class GptController {
     orthographyCheck(orthographyDto) {
         return this.gptService.orthographyCheck(orthographyDto);
     }
+    prosConsDicusser(proConsDiscuserDto) {
+        return this.gptService.prosConsDicusser(proConsDiscuserDto);
+    }
+    async prosConsDicusserStream(proConsDiscuserDto, res) {
+        const stream = await this.gptService.prosConsDicusserStream(proConsDiscuserDto);
+        res.setHeader('Content-Type', 'application/json');
+        res.status(common_1.HttpStatus.OK);
+        for await (const chunk of stream) {
+            const piece = chunk.choices[0].delta.content || '';
+            res.write(piece);
+        }
+        res.end();
+    }
+    translateText(translateDto) {
+        return this.gptService.translateText(translateDto);
+    }
+    async textToAudio(textToAudioDto, res) {
+        const filePath = await this.gptService.textToAudio(textToAudioDto);
+        res.setHeader('Content-Type', 'audio/mp3');
+        res.status(common_1.HttpStatus.OK);
+        res.sendFile(filePath);
+    }
+    async textToAudioGetter(res, fileId) {
+        const filePath = await this.gptService.textToAudioGetter(fileId);
+        res.setHeader('Content-Type', 'audio/mp3');
+        res.status(common_1.HttpStatus.OK);
+        res.sendFile(filePath);
+    }
 };
 exports.GptController = GptController;
 __decorate([
@@ -32,6 +60,44 @@ __decorate([
     __metadata("design:paramtypes", [dtos_1.OrthographyDto]),
     __metadata("design:returntype", void 0)
 ], GptController.prototype, "orthographyCheck", null);
+__decorate([
+    (0, common_1.Post)('pros-cons-discusser'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [dtos_1.ProsConsDiscusserDto]),
+    __metadata("design:returntype", void 0)
+], GptController.prototype, "prosConsDicusser", null);
+__decorate([
+    (0, common_1.Post)('pros-cons-discusser-stream'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [dtos_1.ProsConsDiscusserDto, Object]),
+    __metadata("design:returntype", Promise)
+], GptController.prototype, "prosConsDicusserStream", null);
+__decorate([
+    (0, common_1.Post)('translate'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [dtos_1.TranslateDto]),
+    __metadata("design:returntype", void 0)
+], GptController.prototype, "translateText", null);
+__decorate([
+    (0, common_1.Post)('text-to-audio'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [dtos_1.TextToAudioDto, Object]),
+    __metadata("design:returntype", Promise)
+], GptController.prototype, "textToAudio", null);
+__decorate([
+    (0, common_1.Get)('text-to-audio/:fileId'),
+    __param(0, (0, common_1.Res)()),
+    __param(1, (0, common_1.Param)('fileId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], GptController.prototype, "textToAudioGetter", null);
 exports.GptController = GptController = __decorate([
     (0, common_1.Controller)('gpt'),
     __metadata("design:paramtypes", [gpt_service_1.GptService])

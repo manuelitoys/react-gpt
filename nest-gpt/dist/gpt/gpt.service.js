@@ -7,9 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GptService = void 0;
+const path = require("path");
+const fs = require("fs");
 const common_1 = require("@nestjs/common");
-const use_cases_1 = require("./use-cases");
 const openai_1 = require("openai");
+const use_cases_1 = require("./use-cases");
 let GptService = class GptService {
     constructor() {
         this.openai = new openai_1.default({
@@ -20,6 +22,25 @@ let GptService = class GptService {
         return await (0, use_cases_1.orthographyCheckUseCase)(this.openai, {
             prompt: orthographyDto.prompt
         });
+    }
+    async prosConsDicusser({ prompt }) {
+        return await (0, use_cases_1.prosConsDicusserUseCase)(this.openai, { prompt });
+    }
+    async prosConsDicusserStream({ prompt }) {
+        return await (0, use_cases_1.prosConsDicusserStreamUseCase)(this.openai, { prompt });
+    }
+    async translateText({ prompt, lang }) {
+        return await (0, use_cases_1.translateUseCase)(this.openai, { prompt, lang });
+    }
+    async textToAudio({ prompt, voice }) {
+        return await (0, use_cases_1.textToAudioUseCase)(this.openai, { prompt, voice });
+    }
+    async textToAudioGetter(fileId) {
+        const filePath = path.resolve(__dirname, '../../generated/audios', `${fileId}.mp3`);
+        const wasFound = fs.existsSync(filePath);
+        if (!wasFound)
+            throw new common_1.NotFoundException(`File ${fileId} not found`);
+        return filePath;
     }
 };
 exports.GptService = GptService;

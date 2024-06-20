@@ -15,4 +15,8 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./orthography.use-case"), exports);
+__exportStar(require("./proConsDiscuser.use-case"), exports);
+__exportStar(require("./proConsStream.use-case"), exports);
+__exportStar(require("./translate.use-case"), exports);
+__exportStar(require("./textToAudio.use-case"), exports);
 //# sourceMappingURL=index.js.map

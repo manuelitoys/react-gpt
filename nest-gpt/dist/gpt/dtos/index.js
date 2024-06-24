@@ -18,4 +18,6 @@ __exportStar(require("./othography.dto"), exports);
 __exportStar(require("./prosConsDiscuser.dto"), exports);
 __exportStar(require("./translate.dto"), exports);
 __exportStar(require("./text-to-audio.dto"), exports);
+__exportStar(require("./audio-to-text.dto"), exports);
+__exportStar(require("./image-generation.dto"), exports);
 //# sourceMappingURL=index.js.map

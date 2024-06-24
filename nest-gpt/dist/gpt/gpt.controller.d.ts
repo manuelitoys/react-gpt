@@ -1,5 +1,6 @@
+/// <reference types="multer" />
 import { GptService } from './gpt.service';
-import { OrthographyDto, ProsConsDiscusserDto, TextToAudioDto, TranslateDto } from './dtos';
+import { AudioToTextDto, ImageGenerationDto, OrthographyDto, ProsConsDiscusserDto, TextToAudioDto, TranslateDto } from './dtos';
 import type { Response } from 'express';
 export declare class GptController {
     private readonly gptService;
@@ -12,4 +13,6 @@ export declare class GptController {
     }>;
     textToAudio(textToAudioDto: TextToAudioDto, res: Response): Promise<void>;
     textToAudioGetter(res: Response, fileId: string): Promise<void>;
+    audioToText(file: Express.Multer.File, audioToTextDto: AudioToTextDto): Promise<import("openai/resources/audio/transcriptions").Transcription>;
+    imageGeneration(imageGenerationDto: ImageGenerationDto): Promise<void>;
 }

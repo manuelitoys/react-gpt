@@ -19,4 +19,6 @@ __exportStar(require("./proConsDiscuser.use-case"), exports);
 __exportStar(require("./proConsStream.use-case"), exports);
 __exportStar(require("./translate.use-case"), exports);
 __exportStar(require("./textToAudio.use-case"), exports);
+__exportStar(require("./audioToText.use-case"), exports);
+__exportStar(require("./imageGeneration.use-case"), exports);
 //# sourceMappingURL=index.js.map

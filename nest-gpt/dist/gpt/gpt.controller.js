@@ -16,6 +16,8 @@ exports.GptController = void 0;
 const common_1 = require("@nestjs/common");
 const gpt_service_1 = require("./gpt.service");
 const dtos_1 = require("./dtos");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
 let GptController = class GptController {
     constructor(gptService) {
         this.gptService = gptService;
@@ -50,6 +52,12 @@ let GptController = class GptController {
         res.setHeader('Content-Type', 'audio/mp3');
         res.status(common_1.HttpStatus.OK);
         res.sendFile(filePath);
+    }
+    async audioToText(file, audioToTextDto) {
+        return this.gptService.audioToText(file, audioToTextDto);
+    }
+    async imageGeneration(imageGenerationDto) {
+        return await this.gptService.imageGeneration(imageGenerationDto);
     }
 };
 exports.GptController = GptController;
@@ -98,6 +106,36 @@ __decorate([
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], GptController.prototype, "textToAudioGetter", null);
+__decorate([
+    (0, common_1.Post)('audio-to-text'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', {
+        storage: (0, multer_1.diskStorage)({
+            destination: './generated/uploads',
+            filename: (req, file, callback) => {
+                const fileExtension = file.originalname.split('.').pop();
+                const fileName = `${new Date().getTime()}.${fileExtension}`;
+                return callback(null, fileName);
+            }
+        })
+    })),
+    __param(0, (0, common_1.UploadedFile)(new common_1.ParseFilePipe({
+        validators: [
+            new common_1.MaxFileSizeValidator({ maxSize: 1000 * 1024 * 5, message: 'File is bigger than 5 mb' }),
+            new common_1.FileTypeValidator({ fileType: 'audio/*' })
+        ]
+    }))),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, dtos_1.AudioToTextDto]),
+    __metadata("design:returntype", Promise)
+], GptController.prototype, "audioToText", null);
+__decorate([
+    (0, common_1.Post)('image-generation'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [dtos_1.ImageGenerationDto]),
+    __metadata("design:returntype", Promise)
+], GptController.prototype, "imageGeneration", null);
 exports.GptController = GptController = __decorate([
     (0, common_1.Controller)('gpt'),
     __metadata("design:paramtypes", [gpt_service_1.GptService])

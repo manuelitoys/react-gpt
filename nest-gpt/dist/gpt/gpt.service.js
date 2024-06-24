@@ -42,6 +42,13 @@ let GptService = class GptService {
             throw new common_1.NotFoundException(`File ${fileId} not found`);
         return filePath;
     }
+    async audioToText(audioFile, audioToTextDto) {
+        const { prompt } = audioToTextDto;
+        return await (0, use_cases_1.audioToTextUseCase)(this.openai, { audioFile, prompt });
+    }
+    async imageGeneration(imageGenerationDto) {
+        return (0, use_cases_1.imageGenerationUseCase)(this.openai, { ...imageGenerationDto });
+    }
 };
 exports.GptService = GptService;
 exports.GptService = GptService = __decorate([

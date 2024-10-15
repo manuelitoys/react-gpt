@@ -14,5 +14,9 @@ export declare class GptController {
     textToAudio(textToAudioDto: TextToAudioDto, res: Response): Promise<void>;
     textToAudioGetter(res: Response, fileId: string): Promise<void>;
     audioToText(file: Express.Multer.File, audioToTextDto: AudioToTextDto): Promise<import("openai/resources/audio/transcriptions").Transcription>;
-    imageGeneration(imageGenerationDto: ImageGenerationDto): Promise<void>;
+    imageGeneration(imageGenerationDto: ImageGenerationDto): Promise<{
+        url: string;
+        localPath: string;
+        revised_prompt: string;
+    }>;
 }

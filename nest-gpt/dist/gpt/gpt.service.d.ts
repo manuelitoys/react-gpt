@@ -12,5 +12,9 @@ export declare class GptService {
     textToAudio({ prompt, voice }: TextToAudioDto): Promise<string>;
     textToAudioGetter(fileId: string): Promise<string>;
     audioToText(audioFile: Express.Multer.File, audioToTextDto?: AudioToTextDto): Promise<OpenAI.Audio.Transcriptions.Transcription>;
-    imageGeneration(imageGenerationDto: ImageGenerationDto): Promise<void>;
+    imageGeneration(imageGenerationDto: ImageGenerationDto): Promise<{
+        url: string;
+        localPath: string;
+        revised_prompt: string;
+    }>;
 }
